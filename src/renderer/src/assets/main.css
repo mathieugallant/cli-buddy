@@ -1,0 +1,96 @@
+/* VS Code Theme Variables */
+:root {
+  --vscode-editor-background: #1e1e1e;
+  --vscode-editor-foreground: #cccccc;
+  --vscode-panel-background: #252526;
+  --vscode-panel-border: #2d2d30;
+  --vscode-titlebar-background: #2d2d30;
+  --vscode-titlebar-border: #3e3e42;
+  --vscode-accent-color: #007acc;
+  --vscode-terminal-background: #1e1e1e;
+  --vscode-terminal-foreground: #cccccc;
+  --vscode-scrollbar-background: #2d2d30;
+  --vscode-scrollbar-thumb: #424242;
+  --vscode-scrollbar-thumb-hover: #4a4a4a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+  overflow: hidden;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global scrollbar styling to match VS Code */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--vscode-scrollbar-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vscode-scrollbar-thumb);
+  border-radius: 5px;
+  border: 2px solid var(--vscode-scrollbar-background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vscode-scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--vscode-scrollbar-background);
+}
+
+/* Focus management for accessibility */
+*:focus {
+  outline: 1px solid var(--vscode-accent-color);
+  outline-offset: -1px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --vscode-editor-background: #000000;
+    --vscode-editor-foreground: #ffffff;
+    --vscode-panel-background: #000000;
+    --vscode-panel-border: #ffffff;
+    --vscode-titlebar-background: #000000;
+    --vscode-titlebar-border: #ffffff;
+    --vscode-terminal-background: #000000;
+    --vscode-terminal-foreground: #ffffff;
+  }
+}
+
+/* Dark mode preference support */
+@media (prefers-color-scheme: light) {
+  :root {
+    --vscode-editor-background: #ffffff;
+    --vscode-editor-foreground: #333333;
+    --vscode-panel-background: #f3f3f3;
+    --vscode-panel-border: #e1e1e1;
+    --vscode-titlebar-background: #f3f3f3;
+    --vscode-titlebar-border: #e1e1e1;
+    --vscode-terminal-background: #ffffff;
+    --vscode-terminal-foreground: #333333;
+    --vscode-scrollbar-background: #f3f3f3;
+    --vscode-scrollbar-thumb: #c1c1c1;
+    --vscode-scrollbar-thumb-hover: #a6a6a6;
+  }
+}
