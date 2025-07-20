@@ -25,9 +25,6 @@ export default {
       fitAddon: null,
       terminalId: null,
       resizeObserver: null,
-      commandHistory: [],
-      historyIndex: -1,
-      currentCommand: '',
       recoveryStatus: null,
       errorMessage: null,
       isInDemoMode: false
@@ -126,18 +123,6 @@ export default {
     },
 
     async handleTerminalInput(data) {
-      // Track current command for history management
-      if (data === '\r' || data === '\n') {
-        // Enter key pressed - this will be handled by the keyboard handler
-        this.handleEnterKey()
-      } else if (data === '\x7f' || data === '\b') {
-        // Backspace - remove last character from current command
-        this.currentCommand = this.currentCommand.slice(0, -1)
-      } else if (data.charCodeAt(0) >= 32) {
-        // Printable character - add to current command
-        this.currentCommand += data
-      }
-
       if (this.terminalId && window.electronAPI?.terminal && !this.isInDemoMode) {
         try {
           await window.electronAPI.terminal.write(this.terminalId, data)
@@ -157,117 +142,7 @@ export default {
     handleTerminalExit(event, data) {
       if (this.terminal && data.id === this.terminalId) {
         this.terminal.write(`\r\nProcess exited with code ${data.code}\r\n`)
-      }
-    },
-
-    handleKeyboardShortcut(event) {
-      // Handle keyboard shortcuts and history navigation
-      if (event.ctrlKey) {
-        switch (event.key.toLowerCase()) {
-          case 'c':
-            event.preventDefault()
-            this.handleCtrlC()
-            return false
-          case 'l':
-            event.preventDefault()
-            this.handleCtrlL()
-            return false
-        }
-      }
-
-      // Handle arrow keys for history navigation
-      if (event.key === 'ArrowUp') {
-        event.preventDefault()
-        this.handleUpArrow()
-        return false
-      } else if (event.key === 'ArrowDown') {
-        event.preventDefault()
-        this.handleDownArrow()
-        return false
-      } else if (event.key === 'Enter') {
-        // Handle Enter key for command history
-        this.handleEnterKey()
-      }
-
-      // Allow other keys to be processed normally
-      return true
-    },
-
-    handleCtrlC() {
-      // Send interrupt signal (Ctrl+C)
-      if (this.terminalId && window.electronAPI?.terminal) {
-        window.electronAPI.terminal.write(this.terminalId, '\x03')
-      }
-    },
-
-    handleCtrlL() {
-      // Clear screen
-      if (this.terminal) {
-        this.terminal.clear()
-      }
-    },
-
-    handleUpArrow() {
-      // Navigate up in command history
-      if (this.commandHistory.length === 0) return
-
-      if (this.historyIndex === -1) {
-        // First time pressing up, go to last command
-        this.historyIndex = this.commandHistory.length - 1
-      } else if (this.historyIndex > 0) {
-        // Go to previous command
-        this.historyIndex--
-      }
-
-      if (this.historyIndex >= 0 && this.historyIndex < this.commandHistory.length) {
-        this.currentCommand = this.commandHistory[this.historyIndex]
-        this.replaceCurrentLine()
-      }
-    },
-
-    handleDownArrow() {
-      // Navigate down in command history
-      if (this.commandHistory.length === 0 || this.historyIndex === -1) return
-
-      if (this.historyIndex < this.commandHistory.length - 1) {
-        // Go to next command
-        this.historyIndex++
-        this.currentCommand = this.commandHistory[this.historyIndex]
-        this.replaceCurrentLine()
-      } else {
-        // Go to empty command (beyond history)
-        this.historyIndex = -1
-        this.currentCommand = ''
-        this.replaceCurrentLine()
-      }
-    },
-
-    handleEnterKey() {
-      // Add command to history when Enter is pressed
-      const command = this.currentCommand.trim()
-
-      if (command && (this.commandHistory.length === 0 || this.commandHistory[this.commandHistory.length - 1] !== command)) {
-        // Add to history if it's not empty and not a duplicate of the last command
-        this.commandHistory.push(command)
-
-        // Limit history size
-        if (this.commandHistory.length > HISTORY_CONFIG.maxHistorySize) {
-          this.commandHistory = this.commandHistory.slice(-HISTORY_CONFIG.maxHistorySize)
-        }
-      }
-
-      // Reset history navigation
-      this.historyIndex = -1
-      this.currentCommand = ''
-    },
-
-    replaceCurrentLine() {
-      // Replace the current line with the command from history
-      if (this.terminal) {
-        // Move cursor to beginning of line and clear it
-        this.terminal.write('\r\x1b[K')
-        // Write the prompt and command
-        this.terminal.write('$ ' + this.currentCommand)
+        // TODO: Close the terminal window
       }
     },
 

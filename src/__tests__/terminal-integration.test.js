@@ -261,53 +261,6 @@ describe('Terminal Integration Tests', () => {
       )
     })
 
-    it('should handle complete command history workflow', async () => {
-      mockElectronAPI.terminal.create.mockResolvedValue({ 
-        success: true, 
-        id: 'history-test-id' 
-      })
-
-      wrapper = mount(TerminalSession)
-      await wrapper.vm.$nextTick()
-
-      // Execute several commands
-      const commands = ['ls', 'pwd', 'echo "test"', 'cat file.txt']
-      
-      for (const command of commands) {
-        wrapper.vm.currentCommand = command
-        wrapper.vm.handleEnterKey()
-      }
-
-      expect(wrapper.vm.commandHistory).toEqual(commands)
-
-      // Test history navigation
-      wrapper.vm.handleUpArrow()
-      expect(wrapper.vm.currentCommand).toBe('cat file.txt')
-      expect(wrapper.vm.historyIndex).toBe(3)
-
-      wrapper.vm.handleUpArrow()
-      expect(wrapper.vm.currentCommand).toBe('echo "test"')
-      expect(wrapper.vm.historyIndex).toBe(2)
-
-      wrapper.vm.handleDownArrow()
-      expect(wrapper.vm.currentCommand).toBe('cat file.txt')
-      expect(wrapper.vm.historyIndex).toBe(3)
-
-      wrapper.vm.handleDownArrow()
-      expect(wrapper.vm.currentCommand).toBe('')
-      expect(wrapper.vm.historyIndex).toBe(-1)
-
-      // Test keyboard shortcuts
-      wrapper.vm.handleCtrlC()
-      expect(mockElectronAPI.terminal.write).toHaveBeenCalledWith(
-        'history-test-id',
-        '\x03'
-      )
-
-      wrapper.vm.handleCtrlL()
-      expect(wrapper.vm.terminal.clear).toHaveBeenCalled()
-    })
-
     it('should handle terminal creation failure and fallback gracefully', async () => {
       // Mock terminal creation failure
       mockElectronAPI.terminal.create.mockRejectedValue(

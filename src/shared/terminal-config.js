@@ -12,7 +12,7 @@ export const TERMINAL_CONFIG = {
   fontFamily: 'Consolas, "Courier New", Monaco, monospace',
   fontWeight: 'normal',
   fontWeightBold: 'bold',
-  lineHeight: 1.2,
+  lineHeight: 1.0,
   letterSpacing: 0,
   scrollback: 1000,
   tabStopWidth: 4,
