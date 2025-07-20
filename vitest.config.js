@@ -7,7 +7,20 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test-setup.js'],
     coverage: {
-      reporter: ['text', 'json', 'html']
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/**',
+        'out/**',
+        'coverage/**',
+        '*.config.js',
+        '*.config.ts',
+        'electron.vite.config.js',
+        'vitest.config.js',
+        'src/test-setup.js',
+        '**/__tests__/**',
+        '**/*.test.{js,ts}',
+        '**/*.spec.{js,ts}'
+      ]
     }
   }
 })
