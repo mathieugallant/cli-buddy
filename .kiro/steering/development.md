@@ -1,7 +1,7 @@
 # Development Practices
 
 ## AI-Assisted Development
-This project is built using AI agents and serves as a tool for AI-assisted development workflows. All development should follow practices that work well with AI agents and maintain code quality.
+All development should follow practices that work well with AI agents and maintain code quality.
 
 ## Test-Driven Development (TDD)
 **MANDATORY**: All functionality additions and maintenance must follow strict TDD practices.
@@ -19,6 +19,7 @@ This project is built using AI agents and serves as a tool for AI-assisted devel
 - Tests must be written before implementation code
 - All tests must be verified to fail before implementation
 - All tests must be verified to pass after implementation
+- Where applicable, tests should validate configurations or settings are correctly passed but should avoid testing for specific configuration values
 
 ## AI Agent Guidelines
 When working with AI agents on this project:

@@ -1,24 +1,29 @@
 # Technology Stack
 
 ## Core Technologies
-- **Electron**: Desktop application framework (v27.0.0)
-- **Vue.js**: Frontend framework (v3.3.4) with Composition API support
+
+- **Electron**: Desktop application framework (v37.2.3)
+- **Vue.js**: Frontend framework (v3.5.17) with Composition API support
 - **Vite**: Build tool and development server via electron-vite
 - **Node.js**: Runtime environment for main process
 
 ## Key Dependencies
-- **xterm**: Terminal emulator library (v5.3.0)
-- **xterm-addon-fit**: Terminal fitting addon (v0.8.0)
+
+- **@xterm/xterm**: Terminal emulator library (v5.5.0)
+- **@xterm/addon-fit**: Terminal fitting addon (v0.10.0)
 
 ## Development Tools
+
 - **Vitest**: Testing framework with jsdom environment
 - **Vue Test Utils**: Vue component testing utilities
 - **electron-vite**: Electron-specific Vite configuration
 
 ## Build System
+
 Uses electron-vite for unified build process across main, preload, and renderer processes.
 
 ## Common Commands
+
 ```bash
 # Development
 npm run dev          # Start development server with hot reload
@@ -34,6 +39,7 @@ npm run test:coverage # Run tests with coverage report
 ```
 
 ## Architecture Notes
+
 - Three-process architecture: main (Node.js), preload (bridge), renderer (Vue.js)
 - Context isolation enabled for security
 - No remote module or node integration in renderer
